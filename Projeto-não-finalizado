@@ -1,0 +1,135 @@
+opcao = -99 #usa se um número negativo pela baixa probabilidade de alguém colocar uma opção negativa
+manifestacoes = []
+sugestoes = []
+reclamacoes = []
+elogios = []
+while opcao != 7:
+    print('\033[034mCENTRO UNIVERSITÁRIO ABC\033[m')
+    print('\033[034mOUVIDORIA\033[m')
+    print('1) Todas as manifestações feitas') #listar todas as manifestações
+    print('2) Todas as sugestões feitas') #listar todas as sugestões
+    print('3) Todas as reclamações feitas') #listar todas as reclamações
+    print('4) Todos os elogios feitos') #listar todos os elogios
+    print('5) Criar/Adicionar uma nova manifestação') #enviar uma nova manifestação (criar uma nova)
+    print('6) Procurar ID do protocolo') #procurar protocolo pelo número (ID)
+    print('7) Sair do sistema de ouvidoria')
+    opcao = int(input('Digite um número para ser direcionado(a) a uma de nossas funcionalidades: '))
+    print()
+    if opcao < 0 or opcao > 7:
+        print('\033[031mA opção selecionada é inválida. Digite um número entre 1 e 7 para poder proseguir em nosso sistema.\033[m')
+        print()
+    if opcao > 0 and opcao <= 7:
+        if opcao == 1:
+            quantManifestacoes = len(manifestacoes)
+            print('\033[035mManifestações armazenadas pelo nosso sistema:\033[m')
+            for resposta in range(quantManifestacoes):
+                print(resposta + 1, ')', manifestacoes[resposta])
+            print()
+        if opcao == 2:
+            quantSugestoes = len(sugestoes)
+            print('\033[035mSugestões armazenadas pelo nosso sistema:\033[m')
+            for resposta in range(quantSugestoes):
+                print(resposta + 1, ')', sugestoes[resposta])
+            print()
+        if opcao == 3:
+            quantReclamacoes = len(reclamacoes)
+            print('\033[035mReclamações armazenadas pelo nosso sistema:\033[m')
+            for resposta in range(quantReclamacoes):
+                print(resposta + 1, ')', reclamacoes[resposta])
+            print()
+        if opcao == 4:
+            quantElogios = len(elogios)
+            print('\033[035mElogios armazenados pelo nosso sistema:\033[m')  #ou ELOGIOS DIRECIONADOS A NOSSA INSTITUIÇÃO
+            for resposta in range(quantElogios):
+                print(resposta + 1, ')', elogios[resposta])
+            print()
+        if opcao == 5:  #tem algum problema aqui, não sei qual é. A partir da linha 53 está dando erro em algo
+            print(
+                '\033[035mCriando uma nova manifestação:\033[m')  # o termo (\33[035m) é usado para colorir a string de roxo
+            print()
+            protocolo = 0
+            nome = str(input('Digite o nome que você deseja colocar em sua manifestação: ')).strip()  # OK
+            #print()
+            #relato = str(input('Descreva o que você deseja relatar a ouvidoria: '))
+            print()
+            # tipo = int(input('Que tipo de manifestação você deseja fazer? Digite 1 para fazer uma sugestão, digite 2 para fazer uma reclamação ou digite 3 se quiser fazer um elogio '))
+            tipo = -1
+            while tipo != 1 or tipo != 2 or tipo != 3:
+                tipo = int(input('Que tipo de manifestação você deseja fazer? Digite 1 para fazer uma sugestão, digite 2 para fazer uma reclamação ou digite 3 se quiser fazer um elogio '))
+                print()
+                if tipo < 1 or tipo > 3:
+                    print(
+                        '\033[031mDado inválido! Por favor repita o procedimento, declarando valores que possam ser aceitos pelo sistema.\033[m')
+                    continue
+                elif tipo == 1 or tipo == 2 or tipo == 3:
+                    if tipo == 1:
+                        tipo = '\033[1m1)Sugestão\033[m'  # (\033[1m) esse termo é usado para deixar o que foi selecionado em negrito. Já o termo (\033[m) é usado para cancelar o que o termo anterior começou
+                    elif tipo == 2:
+                        tipo = '\033[1m2)Reclamação\033[m'
+                    elif tipo == 3:
+                        tipo = '\033[1m3)Elogio\033[m'
+                break
+            print()
+            relato = str(input('Descreva o que você deseja relatar a ouvidoria: '))
+            #print(nome, tipo, relato)
+            print()
+            protocolo = len(manifestacoes) + 1
+            manifestacao = 'Código ' + str(protocolo) + '-' + nome + '-' + tipo + '-' + relato
+            print(manifestacao)
+            manifestacoes.append(manifestacao)
+            if tipo == 1 or tipo == 2 or tipo == 3:
+                if tipo == 1:
+                    tipo = '\033[1m1)Sugestão:\033[m'  # (\033[1m) esse termo é usado para deixar o que foi selecionado em negrito. Já o termo (\033[m) é usado para cancelar o que o termo anterior começou
+                    protocolo = len(sugestoes) + 1
+                    sugestao = 'Código ' + str(protocolo) + '-' + nome + '-' + relato
+                    sugestoes.append(sugestao)
+                    # print(sugestao)  retirar
+                elif tipo == 2:
+                    tipo = '\033[1m2)Reclamação:\033[m'
+                    protocolo = len(reclamacoes) + 1
+                    reclamacao = 'Código ' + str(protocolo) + '-' + nome + '-' + relato
+                    reclamacoes.append(reclamacao)
+                    # print(reclamacao)  retirar
+                elif tipo == 3:
+                    tipo = '\033[1m3)Elogio:\033[m'
+                    protocolo = len(elogios) + 1
+                    elogio = 'Código ' + str(protocolo) + '-' + nome + '-' + tipo + '-' + relato
+                    elogios.append(elogio)
+                    # print(elogio)  retirar
+
+    if opcao == 6:
+        pesquisa = int(input('Digite O código que você está procurando! \nDica: utilize apenas números. \nCódigo: '))
+        pesquisa = str(pesquisa)
+        codigoProcurado = 'Código', pesquisa in manifestacoes
+        quantManifestacoes = len(manifestacoes)
+        if pesquisa < '0' or pesquisa > str(quantManifestacoes):
+            print('O {} que você está procurando não é compatível com o nosso sistema!'.format(codigoProcurado))
+        elif pesquisa >= str(quantManifestacoes) and pesquisa <= str(quantManifestacoes):
+            print('O código procurado é {}!'.format(codigoProcurado))
+            maniQuebrada = manifestacao.split('-') #manifestação procurada quebrada
+            #print(manifestacao)
+            print(maniQuebrada[0])  #número do protocolo
+            print(maniQuebrada[1])  #nome do indivíduo
+            print(maniQuebrada[2])  #tipo de manifestação
+            print(maniQuebrada[3])  #relato do indivíduo
+            print()
+
+    if opcao == 7:
+        print('7) Sair do sistema de ouvidoria')
+        print('Salvando os dados e saindo do sistema ...')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
