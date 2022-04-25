@@ -1,0 +1,95 @@
+opcao = -99 #usa se um número negativo pela baixa probabilidade de alguém colocar uma opção negativa
+manifestacoes = []
+tipo = ['Sugestão', 'Reclamação', 'Elogio'] #tipo de manifestação que você deseja realizar
+while opcao != 7: #apresentação do menu do sistema
+    print('CENTRO UNIVERSITÁRIO ABC') #apresentação da instituição
+    print('OUVIDORIA') #indicação de que se trata o sistema
+    print('1) Todas as manifestações feitas até o momento!') #listar todas as manifestações
+    print('2) Todas as sugestões feitas até o momento!') #listar todas as sugestões
+    print('3) Todas as reclamações feitas até o momento!') #listar todas as reclamações
+    print('4) Todos os elogios feitos até o momento!') #listar todos os elogios
+    print('5) Criar/Adicionar uma nova manifestação') #enviar uma nova manifestação (criar uma nova)
+    print('6) Procurar ID do protocolo') #procurar protocolo pelo número (ID)
+    print('7) Sair do sistema de ouvidoria')
+    opcao = int(input('Digite um número para ser direcionado a uma de nossas funcionalidades: ')) #interação com o menu do sistema
+    print()
+    if opcao < 0 or opcao > 7:  # caso seja digitado um valor que não corresponde a um dos apresentados no menu do sistema
+        print('A opção selecionada é inválida. Digite um número entre 1 e 7 para poder proseguir em nosso sistema.')
+        print()
+    if opcao == 1:
+        quantManifestacoes = len(manifestacoes)
+        print('Manifestações armazenadas pelo nosso sistema até o momento:') #todas as manifestações do sistema
+        for resposta in range(quantManifestacoes):
+            print(resposta + 1, ')', manifestacoes[resposta])
+        print()
+    if opcao == 2:
+        print('Sugestões armazenadas pelo nosso sistema até o momento:') #apenas as sugestões armazenadas no sistema
+        for maniSplit in manifestacoes:
+            sugestoesSplit = maniSplit.split('-')
+            if sugestoesSplit[2] == tipo[0]:
+                sugestoesSplit.pop(2)
+                print('Código', end='')
+                for i in sugestoesSplit:
+                    print('>>' + i, end='')
+        print()
+    if opcao == 3:
+        print('Reclamações armazenadas pelo nosso sistema até o momento:') #apenas as reclamações armazenadas no sistema
+        for maniSplit in manifestacoes:
+            reclamacoesSplit = maniSplit.split('-')
+            if reclamacoesSplit[2] == tipo[1]:
+                reclamacoesSplit.pop(2)
+                print('Código', end='')
+                for i in reclamacoesSplit:
+                    print('>>' + i, end='')
+        print()
+    if opcao == 4:
+        print('Elogios armazenadas pelo nosso sistema até o momento:') #apenas os elogios armazenados no sistema
+        for maniSplit in manifestacoes:
+            elogiosSplit = maniSplit.split('-')
+            if elogiosSplit[2] == tipo[2]:
+                elogiosSplit.pop(2)
+                print('Código', end='')
+                for i in elogiosSplit:
+                    print('>>' + i, end='')
+        print()
+    if opcao == 5:
+        print('Criando uma nova manifestação:')  # Criando novas manifestações
+        print()
+        protocolo = 0
+        nome = str(input('Digite o nome que você deseja colocar em sua manifestação: ')).strip()  # nome do requisitante
+        print()
+        tipop = -1
+        while tipop < 1 or tipop > 3: # que tipo de requisição você quer fazer
+            tipop = int(input('Que tipo de manifestação você deseja fazer? Digite 1 para fazer uma sugestão, digite 2 para fazer uma reclamação ou digite 3 se quiser fazer um elogio '))
+            if tipop < 1 or tipop > 3: # em caso de ser digitado um valor que não corresponda a uma requisição válido para o sistema
+                print('Dado inválido! Por favor repita o procedimento, declarando valores que possam ser aceitos pelo sistema.')
+        print()
+        relato = str(input('Descreva o que você deseja relatar a ouvidoria: ')) #requisição feita a ouvidoria
+        print()
+        protocolo = len(manifestacoes) + 1 #definição do protocolo, ou seja, a posição em que a nova manifestação irá se encontrar
+        manifestacao = str(protocolo) + '-' + nome + '-' + tipo[tipop-1] + '-' + relato
+        print(manifestacao)  #confirmação da sua manifestação criada
+        manifestacoes.append(manifestacao) #adicionando novas manifestações ao sistema
+    if opcao == 6:
+        pesquisa = int(input('Digite O código que você está procurando! \nDica: utilize apenas números. \nCódigo: '))
+        quantManifestacoes = len(manifestacoes)
+        if pesquisa < 0 or pesquisa >quantManifestacoes:
+            print('O código {} que você está procurando não é compatível com o nosso sistema!'.format(pesquisa))
+        pesquisadigitada = pesquisa
+        for pesquisatemp in manifestacoes:
+            pesquisaquebrado = pesquisatemp.split('-')
+            if int(pesquisaquebrado[0]) == (pesquisadigitada):
+                print('Código',)
+                for i in pesquisaquebrado:
+                    print(i)
+        print()
+print('Salvando os dados e saindo do sistema ...')
+
+
+
+
+
+
+
+
+
